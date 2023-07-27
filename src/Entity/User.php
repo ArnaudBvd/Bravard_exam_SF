@@ -46,6 +46,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $release_date = null;
 
+    public function hasRoles($role)
+    {
+        $return = false;
+
+        foreach ($this->roles as $roleParcours){
+            if($role == $roleParcours){
+                $return = true;
+            }
+        }
+        return $return;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
