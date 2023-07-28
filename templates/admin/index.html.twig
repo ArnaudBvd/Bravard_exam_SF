@@ -11,10 +11,6 @@
 <div class="example-wrapper">
     <h1>Bonjour {{ app.user.firstname }} {{app.user.lastname}} </h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Bravard_exam_SF/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Bravard_exam_SF/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    <a href="{{path ('app_user_new')}}">Ajouter un employé</a>
 </div>
 {% endblock %}

@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -24,14 +26,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
-     */
+     */    
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Veuillez saisir un mot de passe")]
+    #[Assert\Regex(pattern: '/^(?=.*[a-z])(?=.*[0-9]).{8,}$/', message: "Le mot de passe doit contenir au moins 8 caractères, 1 lettre et 1 chiffre")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez saisir un prénom")]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez saisir un nom")]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
