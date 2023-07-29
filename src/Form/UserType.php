@@ -47,7 +47,7 @@ class UserType extends AbstractType
             ])
 
             ->add('photo', FileType::class, [
-                'label' => 'Photo (Format PNG ou JPEG)',
+                'label' => 'Photo (Format PNG, JPEG ou WEBP)',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -56,6 +56,7 @@ class UserType extends AbstractType
                         'mimeTypes' => [
                             'image/png',
                             'image/jpeg',
+                            'image/webp'
                         ],
                     'mimeTypesMessage' => "Veuillez uploader une image au bon format"
                     ])

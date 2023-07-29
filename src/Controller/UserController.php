@@ -7,10 +7,12 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -24,7 +26,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -39,6 +41,28 @@ class UserController extends AbstractController
             );
 
             $user->setRoles(["ROLE_USER"]);
+
+            $photo = $form->get('photo')->getData();
+
+            $originalFileName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $saveFileName = $slugger->slug($originalFileName);
+            $newFileName = $saveFileName .'-'.uniqid().'.'.$photo->guessExtension();
+
+            try{
+                $photo->move(
+                    $this->getParameter('user_photo_directory'),
+                    $newFileName
+                );
+            }catch (FileException $e) {
+                dd($e);
+            }
+
+            $form = $form->getData();
+            $form->setPhoto($newFileName);
+
+            $entityManager->persist($form);
+            $entityManager->flush();
 
             $entityManager->persist($user);
             $entityManager->flush();
