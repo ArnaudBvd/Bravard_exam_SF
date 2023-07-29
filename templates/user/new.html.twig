@@ -10,6 +10,22 @@
 			<a href="{{ path ('app_admin') }}">Retour</a>
 		</div>
 
-		{{ include('user/_form.html.twig') }}
+		{# {{ include('user/_form.html.twig') }} #}
+
+		{{ form_start(form) }}
+		{{ form_row(form.firstname) }}
+		{{ form_row(form.lastname) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.password) }}
+		{{ form_row(form.photo) }}
+		{{ form_row(form.sector) }}
+		{{ form_row(form.contract) }}
+		{{ form_row(form.release_date) }}
+
+		<div class="d-flex justify-content-center mt-5">
+			<button type="submit" class="btn btn-primary">ENREGISTRER LE NOUVEAU COMPTE</button>
+		</div>
+
+		{{ form_end(form) }}
 	</div>
 {% endblock %}
