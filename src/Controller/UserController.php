@@ -43,7 +43,7 @@ class UserController extends AbstractController
             $user->setRoles(["ROLE_USER"]);
 
             $photo = $form->get('photo')->getData();
-
+           
             $originalFileName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
 
             $saveFileName = $slugger->slug($originalFileName);
