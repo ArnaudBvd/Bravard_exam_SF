@@ -56,7 +56,7 @@ class UserType extends AbstractType
             ->add('contract', TextType::class, [
                 'label' => 'Type de contrat',
                 'attr' => [
-                    'placeholder' => "Veuillez saisir un type de contrat",                    
+                    'placeholder' => "Veuillez saisir un type de contrat",                                        
                 ]  
             ])
 
