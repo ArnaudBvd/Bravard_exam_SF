@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,40 +37,43 @@ class UserController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('password')->getData()                    
+                    $form->get('password')->getData()
                 )
             );
 
             $user->setRoles(["ROLE_USER"]);
 
             $photo = $form->get('photo')->getData();
-           
-            $originalFileName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+            if (is_null($photo)) {
+                $error = new FormError("Veuillez uploader une image");
+                $form->get('photo')->addError($error);
+            } else {
+                $originalFileName = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
 
-            $saveFileName = $slugger->slug($originalFileName);
-            $newFileName = $saveFileName .'-'.uniqid().'.'.$photo->guessExtension();
+                $saveFileName = $slugger->slug($originalFileName);
+                $newFileName = $saveFileName . '-' . uniqid() . '.' . $photo->guessExtension();
 
-            try{
-                $photo->move(
-                    $this->getParameter('user_photo_directory'),
-                    $newFileName
-                );
-            }catch (FileException $e) {
-                dd($e);
+                try {
+                    $photo->move(
+                        $this->getParameter('user_photo_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    dd($e);
+                }
+
+                $form = $form->getData();
+                $form->setPhoto($newFileName);
+
+                $entityManager->persist($form);
+                $entityManager->flush();
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
             }
-
-            $form = $form->getData();
-            $form->setPhoto($newFileName);
-
-            $entityManager->persist($form);
-            $entityManager->flush();
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form,
@@ -105,7 +109,7 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
