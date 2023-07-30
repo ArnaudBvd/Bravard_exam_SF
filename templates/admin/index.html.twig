@@ -21,8 +21,14 @@
 		<h1 class="mt-5 mb-3 text-center">Bonjour
 			{{ app.user.firstname }}
 			{{app.user.lastname}}</h1>
-        
-        <h2 class="text-center mb-5 fst-italic">Bienvenue dans votre espace administration</h2>
+
+		<h2 class="text-center mb-5 fst-italic">Bienvenue dans votre espace administration</h2>
+
+		<div class="count mb-4">
+			<p class="fs-5 fw-bold text-success">TOTAL :
+				{{users.getTotalItemCount}}
+				Employés</p>
+		</div>
 
 		<a href="{{path ('app_user_new')}}" class="text-uppercase text-decoration-none btn btn-success">+ créer un compte</a>
 	</div>
@@ -43,7 +49,7 @@
 								{{user.sector}}</li>
 							<li>Type de contrat :
 								{{user.contract}}</li>
-                            <li>Fin de contrat :
+							<li>Fin de contrat :
 								{{ user.releaseDate ? user.releaseDate|date('d-m-Y') : '' }}</li>
 						</ul>
 					</div>
@@ -52,13 +58,17 @@
 							<a href="{{ path ('app_user_edit', {'id': user.id}) }}"><img src="uploads\icons\edit.png" width="50px" height="50px" title=" Modifier {{user.firstname}} {{user.lastname}} "></a>
 						</div>
 						{# <div>
-							<a href=" {{ path ('app_user_delete', {'id': user.id}) }} "><img src="uploads\icons\delete.png" width="50px" height="50px" title=" Supprimer {{user.firstname}} {{user.lastname}} "></a>
-						</div> #}
+																									<a href=" {{ path ('app_user_delete', {'id': user.id}) }} "><img src="uploads\icons\delete.png" width="50px" height="50px" title=" Supprimer {{user.firstname}} {{user.lastname}} "></a>
+																								</div> #}
 					</div>
 				</div>
 			{% else %}
 				<p>Il n'y a aucun employé.</p>
 			{% endfor %}
+		</div>
+
+		<div class="navigation d-flex justify-content-center mb-4 text-success">
+			{{knp_pagination_render(users)}}
 		</div>
 	</div>
 
