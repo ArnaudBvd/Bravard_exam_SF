@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -63,18 +64,24 @@ class UserType extends AbstractType
                 ]
             ])
 
-            ->add('sector', TextType::class, [
+                       
+            ->add('sector', ChoiceType::class, [
                 'label' => 'Secteur d\'activité',
-                'attr' => [
-                    'placeholder' => "Veuillez saisir un secteur d'activité",
-                ]  
+                'choices' => [
+                    'RH' => 'rh',
+                    'Informatique' => 'info',
+                    'Comptabilité' => 'compta',
+                    'Direction' => 'dir',
+                ]
             ])
 
-            ->add('contract', TextType::class, [
+              ->add('contract', ChoiceType::class, [
                 'label' => 'Type de contrat',
-                'attr' => [
-                    'placeholder' => "Veuillez saisir un type de contrat",                                        
-                ]  
+                'choices' => [
+                    'CDI' => 'cdi',
+                    'CDD' => 'cdd',
+                    'Interim' => 'interim',
+                ]
             ])
 
             ->add('release_date', DateType::class, [
