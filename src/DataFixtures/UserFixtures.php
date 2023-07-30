@@ -24,6 +24,7 @@ class UserFixtures extends Fixture
         $Admin->setEmail("rh@humanbooster.com");
         $encodedPassword = $this->hasher->hashPassword($Admin, "rh123@");
         $Admin->setPassword($encodedPassword);
+        $Admin->setPhoto('uploads/users/rh.jpeg');
         $Admin->setRoles(["ROLE_RH"]);
         $Admin->setSector("RH");
         $Admin->setContract("CDI");
