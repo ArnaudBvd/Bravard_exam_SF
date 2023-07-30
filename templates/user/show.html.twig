@@ -1,58 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<div class="container">
+		<h1 class="h3 mb-3 font-weight-normal text-center mt-5 text-uppercase">PROFIL DE :
+			{{user.firstname}}
+			{{user.lastname}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Photo</th>
-                <td>{{ user.photo }}</td>
-            </tr>
-            <tr>
-                <th>Sector</th>
-                <td>{{ user.sector }}</td>
-            </tr>
-            <tr>
-                <th>Contract</th>
-                <td>{{ user.contract }}</td>
-            </tr>
-            <tr>
-                <th>Release_date</th>
-                <td>{{ user.releaseDate ? user.releaseDate|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<div class="mb-4">
+			<a href="{{ path ('app_user_index') }}" class="text-info fw-bold text-decoration-none fs-5">Retour</a>
+		</div>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+		<div class="d-flex justify-content-center mb-5">
+			<div>
+				<img src="{{asset ('/uploads/users/' ~ user.photo)}}" class="mt-3 rounded" width="300" height="400" alt="{{user.firstname}}">
+			</div>
+		</div>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+		<table class="table">
+			<tbody>
 
-    {{ include('user/_delete_form.html.twig') }}
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr>
+					<th>Prénom</th>
+					<td>{{ user.firstname }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ user.lastname }}</td>
+				</tr>				
+				<tr>
+					<th>Secteur d'activité</th>
+					<td>{{ user.sector }}</td>
+				</tr>
+				<tr>
+					<th>Type de contrat</th>
+					<td>{{ user.contract }}</td>
+				</tr>
+				<tr>
+					<th>Date de fin de contrat</th>
+					<td>{{ user.releaseDate ? user.releaseDate|date('Y-m-d') : '' }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 {% endblock %}
