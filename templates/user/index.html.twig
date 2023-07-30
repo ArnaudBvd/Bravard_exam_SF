@@ -7,13 +7,14 @@
 	<div class="container">
 		<h1 class="my-5 text-center text-uppercase">annuaire des employés</h1>
 
-		{# <div class="count">
-															<p class="fs-5 fw-bold">Total :
-																{{user.getTotalItemCount}}
-																Employés</p>
-														</div> #}
 		<div class="mb-4">
 			<a href="{{ path ('app_default') }}" class="text-info fw-bold text-decoration-none fs-5">Accueil</a>
+		</div>
+
+		<div class="count mb-4">
+			<p class="fs-5 fw-bold text-dark">TOTAL :
+				{{users.getTotalItemCount}}
+				Employés</p>
 		</div>
 
 		<div class="container">
@@ -46,5 +47,10 @@
 					<p>Il n'y a aucun employé.</p>
 				{% endfor %}
 			</div>
+
+			<div class="navigation d-flex justify-content-center mb-4 text-success">
+				{{knp_pagination_render(users)}}
+			</div>
+
 		</div>
 	{% endblock %}
