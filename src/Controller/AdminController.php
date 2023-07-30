@@ -27,5 +27,5 @@ class AdminController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
-    
+        
 }
