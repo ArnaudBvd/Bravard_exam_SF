@@ -22,17 +22,17 @@
         </li>
         {% endif %}
 
+          {% if app.user is not null and app.user.hasRoles("ROLE_RH") %}
+				<li class="nav-item">
+					<a class="nav-link text-light fs-5 ms-4" href="{{path ('app_admin')}}">Administration</a>
+				</li>
+        {% endif %}  
+
         {% if app.user is not null %}
         <li class="nav-item">
           <a class="nav-link text-light fs-5 ms-4" href="{{path ('app_logout')}}">Se déconnecter</a>
         </li>         
-        {% endif %}
-
-         {% if app.user is not null and app.user.hasRoles("ROLE_RH") %}
-				<li class="nav-item">
-					<a class="nav-link text-light fs-5 ms-4" href="{{path ('app_admin')}}">Administration</a>
-				</li>
-        {% endif %}        
+        {% endif %}            
       </ul>
     </div>
   </div>
