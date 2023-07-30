@@ -1,20 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Hello DefaultController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>ACCUEIL</h1>
+	<div class="container">
+		<div class="d-flex justify-content-center my-5">
+			<div>
+				<img src="uploads/icons/annuary.png" alt="logo d'annuaire" width="50" height="50"/>
+			</div>
+			<div>
+				<h1>ANNUAIRE D'ENTREPRISE</h1>
+			</div>
+		</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Bravard_exam_SF/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Bravard_exam_SF/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<h2 class="text-center fst-italic">Pour pouvoir profiter de cette application, veuillez vous connecter</h2>
+
+		<div class="d-flex justify-content-center my-5">
+			<article class="border rounded py-4 px-4 mx-2">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tincidunt lectus metus, ac faucibus urna elementum vitae. Suspendisse imperdiet condimentum lacinia. Duis felis ante, egestas quis porta quis, blandit sit amet est. Fusce convallis lacus vel lorem lacinia, id laoreet lectus vulputate. Aliquam neque est, imperdiet non velit vitae, finibus luctus ex. Nullam non turpis tellus. Vivamus dapibus, justo eu consequat mattis, mauris magna aliquam mauris, sit amet mollis purus eros ac magna.
+			</article>
+
+			<article class="border rounded py-4 px-4 mx-2">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tincidunt lectus metus, ac faucibus urna elementum vitae. Suspendisse imperdiet condimentum lacinia. Duis felis ante, egestas quis porta quis, blandit sit amet est. Fusce convallis lacus vel lorem lacinia, id laoreet lectus vulputate. Aliquam neque est, imperdiet non velit vitae, finibus luctus ex. Nullam non turpis tellus. Vivamus dapibus, justo eu consequat mattis, mauris magna aliquam mauris, sit amet mollis purus eros ac magna.
+			</article>
+
+			<article class="border rounded py-4 px-4 mx-2">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tincidunt lectus metus, ac faucibus urna elementum vitae. Suspendisse imperdiet condimentum lacinia. Duis felis ante, egestas quis porta quis, blandit sit amet est. Fusce convallis lacus vel lorem lacinia, id laoreet lectus vulputate. Aliquam neque est, imperdiet non velit vitae, finibus luctus ex. Nullam non turpis tellus. Vivamus dapibus, justo eu consequat mattis, mauris magna aliquam mauris, sit amet mollis purus eros ac magna.
+			</article>
+
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<div>
+				{% if app.user is null %}
+					<a class="btn btn-primary" href="{{path ('app_login')}}">SE CONNECTER</a>
+				{% endif %}
+			</div>
+
+			<div>
+				{% if app.user is not null %}
+					<a class="btn btn-primary" href="{{path ('app_logout')}}">SE DECONNECTER</a>
+				{% endif %}
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

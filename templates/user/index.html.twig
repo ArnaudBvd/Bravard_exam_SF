@@ -8,10 +8,13 @@
 		<h1 class="my-5 text-center text-uppercase">annuaire des employés</h1>
 
 		{# <div class="count">
-			<p class="fs-5 fw-bold">Total :
-				{{user.getTotalItemCount}}
-				Employés</p>
-		</div> #}
+					<p class="fs-5 fw-bold">Total :
+						{{user.getTotalItemCount}}
+						Employés</p>
+				</div> #}
+		<div class="mb-4">
+			<a href="{{ path ('app_default') }}" class="text-info fw-bold text-decoration-none">Accueil</a>
+		</div>
 
 		<div class="container">
 			<div class="row mb-4">
@@ -19,7 +22,9 @@
 					<div class="card mx-3 my-3 shadow p-3 mb-5 bg-body rounded" style="width: 25rem;">
 						<img src="{{asset ('/uploads/users/' ~ user.photo)}}" height="450" class="card-img-top mt-3" alt="{{user.firstname}}">
 						<div class="card-body">
-							<h5 class="card-title text-center mb-3"> {{user.firstname}} {{user.lastname}}</h5>
+							<h5 class="card-title text-center mb-3">
+								{{user.firstname}}
+								{{user.lastname}}</h5>
 							<ul>
 								<li>Email :
 									{{user.email}}</li>
