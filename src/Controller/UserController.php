@@ -112,7 +112,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'app_user_delete', methods: ['POST'])]
+    #[Route('/admin/{id}/delete', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_RH')]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
