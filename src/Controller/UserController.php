@@ -29,7 +29,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_RH')]
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger): Response
     {
@@ -84,7 +84,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
+    #[Route('/user/{id}', name: 'app_user_show', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function show(User $user): Response
     {
@@ -93,7 +93,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_RH')]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
@@ -112,7 +112,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
+    #[Route('/admin/{id}', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_RH')]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
