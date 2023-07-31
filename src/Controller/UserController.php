@@ -38,7 +38,7 @@ class UserController extends AbstractController
 
     #[Route('/admin/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_RH')]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger, UserRepository $userRepository): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -53,6 +53,15 @@ class UserController extends AbstractController
             );
 
             $user->setRoles(["ROLE_USER"]);
+            
+            
+            // $checkEmail = $this->$userRepository->findByEmail();
+            // $email = $form->get('email')->getData();
+            // if($checkEmail == $email) {
+            //     $error = new FormError("Cette adresse mail existe déjà");
+            //     $form->get('email')->addError($error);
+            // }
+
 
             $photo = $form->get('photo')->getData();
             if (is_null($photo)) {
