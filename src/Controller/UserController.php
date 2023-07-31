@@ -102,16 +102,41 @@ class UserController extends AbstractController
 
     #[Route('/admin/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_RH')]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
+            $photo = $form->get('photo')->getData();
+            if(is_null($photo)){
+                $error = new FormError("Veuillez uploader une image");
+                $form->get('photo')->addError($error);
+            }else {
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+
+                try {
+                    $photo->move(
+                        $this->getParameter('user_photo_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    dd($e);
+                }
+
+                $form = $form->getData();
+                $form->setPhoto($newFilename);
+
+            }
+
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/edit.html.twig', [
