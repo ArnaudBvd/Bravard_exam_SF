@@ -16,6 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Service\FileUploader;
 
 
 //#[Route('/user')]
@@ -117,7 +118,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+                       
             $photo = $form->get('photo')->getData();
             if(is_null($photo)){
                 $error = new FormError("Veuillez uploader une image");
@@ -126,7 +127,6 @@ class UserController extends AbstractController
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
 
                 try {
                     $photo->move(
