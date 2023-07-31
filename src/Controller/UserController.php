@@ -108,6 +108,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -119,7 +120,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/delete', name: 'app_user_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_RH')]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
